@@ -1,0 +1,19 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t jireymendez/client -f Dockerfile.dev .
+
+script:
+  - docker run -e CI=true jireymendez/client npm run test 
+
+deploy: # All configurations are reflective of the course
+  provider: elasticbeanstalk
+  region: "us-west-2"   # Has to be the region where the AWS Beanstalk was created
+  app: "docker"         # Beanstalk app name
+  env: "Docker-env"     # Environment name in the Beanstalk
+  bucket_name: "elasticbeanstalk-us-west-2-3064766..."          # S3 Bucket name
+  bucket_path: "docker" # Same as app name. It should be a subfolder on the S3 bucket
+  on:
+    branch: master
