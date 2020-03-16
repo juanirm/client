@@ -3,10 +3,11 @@ services:
   - docker
 
 before_install:
-  - docker build -t jireymendez/client -f Dockerfile.dev .
+  #- docker build -t jireymendez/client -f Dockerfile.dev .
+  docker build .
 
 script:
-  - docker run -e CI=true jireymendez/client npm run test -- --coverage
+  #- docker run -e CI=true jireymendez/client npm run test -- --coverage
 
 deploy:
   provider: azure_web_apps
